@@ -108,4 +108,16 @@ Verify deletion by checking the collection contents.
 - Find all movies that have a synopsis that contains the word &quot;gold&quot; and &quot;dragon&quot;
 
 ![Image](https://github.com/user-attachments/assets/286e7285-0c34-4d25-b278-ffa624d3a58b)
+
+6. Delete
+
+- Delete the movie &quot;Pee Wee Herman&#39;s Big Adventure&quot;
+
+![Image](https://github.com/user-attachments/assets/7bdef650-614e-45ea-9b45-7de27ffb9065)
+
+- Delete the movie &quot;Avatar&quot;
+
+![Image](https://github.com/user-attachments/assets/3424ecb6-f291-4688-8ff4-357a696c3f44)
+
+
   
