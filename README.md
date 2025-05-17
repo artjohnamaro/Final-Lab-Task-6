@@ -41,3 +41,8 @@ Identify the document(s) to be removed using a condition.
 Remove the document(s) from the collection.
 
 Verify deletion by checking the collection contents.
+
+## OUTPUTS
+1. 
+
+2. 
