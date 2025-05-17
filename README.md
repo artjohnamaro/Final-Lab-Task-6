@@ -166,6 +166,33 @@
   6. db.posts.insert({username:"ScumbagSteve", title:"Forks your repo on github", body:"Sets to private"})
  
   - ![Image](https://github.com/user-attachments/assets/8eadf8d3-bd4e-4604-b2c9-b7218ca77573)
+
+- Insert the following documents into a `comments` collection
+  
+  1. db.comments.insert({ username:"GoodGuyGreg", comment:"Hope you got a good deal!", post:ObjectId("5ca0b7e96435f98b5901f463")})
+     
+  - ![Image](https://github.com/user-attachments/assets/aecdcf58-3550-4093-a4c9-c7f4ffe5cd32)
+ 
+  2. where [post_obj_id] is the ObjectId of the `posts` document: "Borrows everything"
+db.comments.insert({username:"GoodGuyGreg", comment:"What's mine is yours!", post:ObjectId("5ca0b9706435f98b5901f46a")})
+
+  - ![Image](https://github.com/user-attachments/assets/2e515d97-0b7a-4875-ad1d-7e7536cc9e09)
+ 
+  3. where [post_obj_id] is the ObjectId of the `posts` document: "Forks your repo on github
+db.comments.insert({username:"GoodGuyGreg", comment:"Don't violate the licensing agreement!", post:ObjectId("5ca0b8766435f98b5901f467")})
+
+  - ![Image](https://github.com/user-attachments/assets/0b0e3121-ba92-4136-8c0f-619d9a76ce4d)
+ 
+  4. where [post_obj_id] is the ObjectId of the `posts` document: "Passes out at party"
+db.comments.insert({username:"ScumbagSteve", comment:"It still isn't clean", post:ObjectId("5ca0b8546435f98b5901f466")})
+
+  - ![Image](https://github.com/user-attachments/assets/f6128a89-b166-410e-af0f-e7a6b14c5ad0)
+ 
+  5. where [post_obj_id] is the ObjectId of the `posts` document: "Reports a bug in your code" db.comments.insert({username:"ScumbagSteve", comment:"Denied your PR cause I found a hack", post:ObjectId("5ca0b9256435f98b5901f469")})
+ 
+  - ![Image](https://github.com/user-attachments/assets/59c3c36c-776b-4b21-8240-a42801417cc8)
+
+
  
 
 
