@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/fb6bb642-93f0-40a8-bd08-8abebb4a36d2)# Final-Lab-Task-6
 # Finals Task 6. MOngoDBCRUD
 
 ## Step-By-Step Process
@@ -80,4 +79,33 @@ Verify deletion by checking the collection contents.
 ![Image](https://github.com/user-attachments/assets/d3175a67-713b-4a5a-b306-d655516dfd02)
 
 
-4. 
+4. Update Documents
+
+- ![Image](https://github.com/user-attachments/assets/2fc859ae-a387-42b9-9888-34955c508b11)
+
+- ![Image](https://github.com/user-attachments/assets/60c67fa9-9770-4ad3-bd35-33272b76a3c0)
+
+- ![Image](https://github.com/user-attachments/assets/67f56b9b-306d-4f0e-bd2c-2094dc1b2f75)
+
+5. Text Search
+
+- Find all movies that have a synopsis that contains the word &quot;Bilbo&quot;
+
+![Image](https://github.com/user-attachments/assets/5520df72-fc62-4e91-a6ab-d381a86e009b)
+
+- Find all movies that have a synopsis that contains the word &quot;Gandalf&quot;
+
+![Image](https://github.com/user-attachments/assets/f921f7a0-a0c6-4ac9-b59b-f4e35d4923f1)
+
+- Find all movies that have a synopsis that contains the word &quot;Bilbo&quot; and not the word &quot;Gandalf&quot;
+
+![Image](https://github.com/user-attachments/assets/d6430403-0517-4370-8b0c-648e3f597a03)
+
+- Find all movies that have a synopsis that contains the word &quot;dwarves&quot; or &quot;hobbit&quot;
+
+![Image](https://github.com/user-attachments/assets/cd89e61c-f49e-45b9-9a0a-66b2a2236453)
+
+- Find all movies that have a synopsis that contains the word &quot;gold&quot; and &quot;dragon&quot;
+
+![Image](https://github.com/user-attachments/assets/286e7285-0c34-4d25-b278-ffa624d3a58b)
+  
