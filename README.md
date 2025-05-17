@@ -1,5 +1,7 @@
 # Finals Task 6. MOngoDBCRUD
 
+This portfolio shows about my knowledge in MongoDB CRUD operations, which stands for Create, Read, Update, and Delete. These are the basic operations used to manage data in a MongoDB database. Through this section, I demonstrate how to perform each of these operations using MongoDB’s methods like insertOne(), find(), updateOne(), and deleteOne(). I also showcase examples using MongoDB with Node.js and explain how data is stored as documents in collections. This reflects my understanding of how MongoDB works in real-world applications, especially for backend development.
+
 ## Step-By-Step Process
 1. Create a Database
 
