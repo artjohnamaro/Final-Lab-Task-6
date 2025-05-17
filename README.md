@@ -129,5 +129,17 @@
 
 ![Image](https://github.com/user-attachments/assets/3424ecb6-f291-4688-8ff4-357a696c3f44)
 
+7. Relationship
+
+- Insert the following documents into a `users` collection
+
+  1. db.users.insert({_id:1,username:"GoodGuyGreg", first_name:"Good Guy", last_name:"Greg"})
+  
+  -  ![Image](https://github.com/user-attachments/assets/aee9adf8-382b-48bf-b469-5135fd83ad56)
+ 
+  2. db.users.insert({_id:2, username:"ScumbagSteve", fullname:{first: "Scumbag", last:"Steve"}})
+  
+  -    ![Image](https://github.com/user-attachments/assets/81ca51f4-fc32-417b-8f6a-36fb168d346c)
+
 
   
