@@ -41,6 +41,16 @@
 
 - Verify deletion by checking the collection contents.
 
+7. RELATIONSHIP
+
+- Insert the following documents into a `users` collection
+
+- Insert the following documents into a `posts` collection
+
+- Insert the following documents into a `comments` collection
+
+8. QUERYING related collections 
+
 ## OUTPUTS
 1. Create Database
 
