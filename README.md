@@ -140,6 +140,33 @@
   2. db.users.insert({_id:2, username:"ScumbagSteve", fullname:{first: "Scumbag", last:"Steve"}})
   
   -    ![Image](https://github.com/user-attachments/assets/81ca51f4-fc32-417b-8f6a-36fb168d346c)
+ 
+- Insert the following documents into a `posts` collection
+
+  1. db.posts.insert({username:"GoodGuyGreg", title:"Passes out at Party", body:"Raises your credit score"})
+     
+  - ![Image](https://github.com/user-attachments/assets/69bc4911-0136-41b4-94e3-d5ac3d88381c)
+ 
+  2. db.posts.insert({ username:"GoodGuyGreg", title:"Steals your identity", body:"Raises your credit score"})
+
+  - ![Image](https://github.com/user-attachments/assets/dc3e220e-fab8-46dc-9f88-a75aac36bffe)
+ 
+  3. db.posts.insert({username:"GoodGuyGreg", title:"Reports a bug in your code", body:"Sends you a pull request"})
+ 
+  - ![Image](https://github.com/user-attachments/assets/2218f9d2-4158-4548-90e2-bad3a4a17d66)
+ 
+  4. db.posts.insert({ username:"ScumbagSteve", title:"Borrows something", body:"Sells it"})
+ 
+  - ![Image](https://github.com/user-attachments/assets/a5feec42-63c0-4e70-9a55-75148cc26100)
+ 
+  5. db.posts.insert({ username:"ScumbagSteve", title:"Borrows everything", body:"The end"})
+ 
+  - ![Image](https://github.com/user-attachments/assets/3b85d743-e792-4f3b-a8dd-c2998d1fb906)
+ 
+  6. db.posts.insert({username:"ScumbagSteve", title:"Forks your repo on github", body:"Sets to private"})
+ 
+  - ![Image](https://github.com/user-attachments/assets/8eadf8d3-bd4e-4604-b2c9-b7218ca77573)
+ 
 
 
   
