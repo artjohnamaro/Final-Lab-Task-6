@@ -189,8 +189,40 @@ db.comments.insert({username:"ScumbagSteve", comment:"It still isn't clean", pos
   - ![Image](https://github.com/user-attachments/assets/f6128a89-b166-410e-af0f-e7a6b14c5ad0)
  
   5. where [post_obj_id] is the ObjectId of the `posts` document: "Reports a bug in your code" db.comments.insert({username:"ScumbagSteve", comment:"Denied your PR cause I found a hack", post:ObjectId("5ca0b9256435f98b5901f469")})
- 
-  - ![Image](https://github.com/user-attachments/assets/59c3c36c-776b-4b21-8240-a42801417cc8)
+
+8. QUERYING related collections
+
+   - Find all users
+     
+     ![Image](https://github.com/user-attachments/assets/5251afd7-1e34-4fab-85c2-0666e3dfb657)
+
+   - Find all posts
+     
+     ![Image](https://github.com/user-attachments/assets/406fda81-fd90-4e85-a599-a9ba4c316628)
+
+   - Find all posts that was authored by "GoodGuyGreg"
+     
+     ![Image](https://github.com/user-attachments/assets/1bcde38e-ba3a-4423-b95e-3e19b3e588a7)
+
+   - Find all posts that was authored by "ScumbagSteve"
+     
+     ![Image](https://github.com/user-attachments/assets/1601df09-2a3b-4c19-b734-9fd9e8519580)
+
+   - Find all comments
+  
+     ![Image](https://github.com/user-attachments/assets/b417142e-472a-4ed4-a1db-35ced339777c)
+
+   - Find all comments that was authored by "GoodGuyGreg"
+  
+     ![Image](https://github.com/user-attachments/assets/d59170e5-1e1d-4bc7-93cd-b98439d031ac)
+
+   - Find all comments that was authored by "ScumbagSteve"
+  
+     ![Image](https://github.com/user-attachments/assets/eea52da1-97ca-446b-b84f-15ca395031dc)
+
+   - Find all comments belonging to the post "Reports a bug in your code"
+
+
 
 
  
