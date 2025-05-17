@@ -1,1 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finals Task 6 | MongoDB CRUD</title>
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0a0e17;
+      --bg-light: #f7f9fc;
+      --card-dark: rgba(18, 25, 38, 0.95);
+      --card-light: rgba(255, 255, 255, 0.9);
+      --text-dark: #d8e1ef;
+      --text-light: #1e293b;
+      --primary: #4361ee;
+      --primary-light: #4895ef;
+      --secondary: #3a0ca3;
+      --accent: #7209b7;
+      --success: #2ecc71;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba(76, 0, 247, 0.15), transparent 70%),
+                  radial-gradient(circle at bottom left, rgba(114, 9, 183, 0.15), transparent 70%);
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary-light), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+
+    .process-card {
+      background: var(--card-dark);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .process-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+
+    .step-title {
+      color: var(--primary-light);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .step-list {
+      list-style: none;
+      padding-left: 2rem;
+    }
+
+    .step-list li {
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .step-list li::before {
+      content: "•";
+      color: var(--primary-light);
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .image-card {
+      background: var(--card-dark);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .image-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 25, 38, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .image-card:hover .image-overlay {
+      opacity: 1;
+    }
+
+    .image-overlay span {
+      color: white;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border: 2px solid white;
+      border-radius: 8px;
+      background: rgba(67, 97, 238, 0.3);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .image-card:hover .image-overlay span {
+      transform: translateY(0);
+    }
+
+    .download-section {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .download-card {
+      background: var(--card-dark);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .download-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      border-color: var(--primary-light);
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(67, 97, 238, 0.2);
+      color: var(--primary-light);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .download-btn:hover {
+      background: rgba(67, 97, 238, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .download-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--primary-light);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(67, 97, 238, 0.1);
+      border-radius: 8px;
+      width: fit-content;
+      margin: 0 auto 1.5rem;
+    }
+
+    .download-hint i {
+      font-size: 1.25rem;
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 23, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 2rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal.active {
+      display: flex;
+      animation: modalFadeIn 0.3s ease forwards;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90vh;
+      position: relative;
+      animation: modalContentSlide 0.3s ease forwards;
+    }
+
+    @keyframes modalContentSlide {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -2rem;
+      right: -2rem;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+      color: var(--primary-light);
+      transform: rotate(90deg);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+     
+      .image-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+     
+      .image-card {
+        aspect-ratio: 4/3;
+      }
+     
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Finals Task 6: MongoDB CRUD</h1>
+      <p class="subtitle">This portfolio shows my knowledge in MongoDB CRUD operations, which stands for Create, Read, Update, and Delete. These are the basic operations used to manage data in a MongoDB database. Through this section, I demonstrate how to perform each of these operations using MongoDB's methods like insertOne(), find(), updateOne(), and deleteOne().</p>
+    </header>
+
+    <main>
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-list-numbers"></i>Step by Step Process</h2>
+        <ul class="step-list">
+          <li><strong>Create a Database:</strong> Start by creating or switching to a specific database. The selected database becomes the active workspace for all upcoming operations.</li>
+          <li><strong>Insert Documents:</strong> Within the database, a collection is created. Multiple documents are inserted into the collection, each containing structured data fields.</li>
+          <li><strong>Find Documents:</strong> Display all documents stored in the collection. Use filters to find specific documents based on certain values.</li>
+          <li><strong>Update Documents:</strong> Locate the document that needs modification using a condition. Specify the field(s) to be changed and apply the update.</li>
+          <li><strong>Search Documents:</strong> Use specific criteria to locate documents that match particular conditions. Review the matched results for accuracy.</li>
+          <li><strong>Delete Documents:</strong> Identify the document(s) to be removed using a condition. Remove the document(s) from the collection and verify deletion.</li>
+          <li><strong>Relationship:</strong> Insert documents into related collections (users, posts, comments) to demonstrate document relationships.</li>
+          <li><strong>Querying Related Collections:</strong> Perform queries across related collections to demonstrate MongoDB's document relationship capabilities.</li>
+        </ul>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-database"></i>Database Creation</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/e23d4aa0-7ba9-4afc-83a3-313fa22a7651" alt="Create Database">
+            <div class="image-overlay">
+              <span>View Database Creation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-file-plus"></i>Document Insertion</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/3a326750-10c6-4f63-81e4-86cb2b8bc0d7" alt="Insert Document">
+            <div class="image-overlay">
+              <span>View Document Insertion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-magnifying-glass"></i>Document Querying</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/9e2701dd-b9ca-46a1-bba8-bf782d53424c" alt="Get All Documents">
+            <div class="image-overlay">
+              <span>All Documents</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/ce4ac565-4745-4190-a584-11190d93d299" alt="Query by Writer">
+            <div class="image-overlay">
+              <span>By Writer</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/75341b45-d320-485e-81c8-b817c4776dfd" alt="Query by Actor">
+            <div class="image-overlay">
+              <span>By Actor</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/d94833a3-0c58-44df-8d5d-a1adc5829a30" alt="Query by Franchise">
+            <div class="image-overlay">
+              <span>By Franchise</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/d6dbbfaa-d742-43da-9372-ea61cfd31a3e" alt="Query by Decade">
+            <div class="image-overlay">
+              <span>90s Movies</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/d3175a67-713b-4a5a-b306-d655516dfd02" alt="Query by Year Range">
+            <div class="image-overlay">
+              <span>Year Range</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-pencil-simple"></i>Document Updates</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/2fc859ae-a387-42b9-9888-34955c508b11" alt="Update Example 1">
+            <div class="image-overlay">
+              <span>Update 1</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/60c67fa9-9770-4ad3-bd35-33272b76a3c0" alt="Update Example 2">
+            <div class="image-overlay">
+              <span>Update 2</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/67f56b9b-306d-4f0e-bd2c-2094dc1b2f75" alt="Update Example 3">
+            <div class="image-overlay">
+              <span>Update 3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-text-aa"></i>Text Search</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/5520df72-fc62-4e91-a6ab-d381a86e009b" alt="Search for Bilbo">
+            <div class="image-overlay">
+              <span>Search: Bilbo</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/f921f7a0-a0c6-4ac9-b59b-f4e35d4923f1" alt="Search for Gandalf">
+            <div class="image-overlay">
+              <span>Search: Gandalf</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/d6430403-0517-4370-8b0c-648e3f597a03" alt="Search Bilbo not Gandalf">
+            <div class="image-overlay">
+              <span>Bilbo not Gandalf</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/cd89e61c-f49e-45b9-9a0a-66b2a2236453" alt="Search dwarves or hobbit">
+            <div class="image-overlay">
+              <span>dwarves or hobbit</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/286e7285-0c34-4d25-b278-ffa624d3a58b" alt="Search gold and dragon">
+            <div class="image-overlay">
+              <span>gold and dragon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-trash"></i>Document Deletion</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/7bdef650-614e-45ea-9b45-7de27ffb9065" alt="Delete Pee Wee Herman">
+            <div class="image-overlay">
+              <span>Delete Pee Wee Herman</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/3424ecb6-f291-4688-8ff4-357a696c3f44" alt="Delete Avatar">
+            <div class="image-overlay">
+              <span>Delete Avatar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-git-fork"></i>Document Relationships</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/aee9adf8-382b-48bf-b469-5135fd83ad56" alt="Insert User 1">
+            <div class="image-overlay">
+              <span>User 1</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/81ca51f4-fc32-417b-8f6a-36fb168d346c" alt="Insert User 2">
+            <div class="image-overlay">
+              <span>User 2</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/69bc4911-0136-41b4-94e3-d5ac3d88381c" alt="Insert Post 1">
+            <div class="image-overlay">
+              <span>Post 1</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/dc3e220e-fab8-46dc-9f88-a75aac36bffe" alt="Insert Post 2">
+            <div class="image-overlay">
+              <span>Post 2</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/2218f9d2-4158-4548-90e2-bad3a4a17d66" alt="Insert Post 3">
+            <div class="image-overlay">
+              <span>Post 3</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/a5feec42-63c0-4e70-9a55-75148cc26100" alt="Insert Post 4">
+            <div class="image-overlay">
+              <span>Post 4</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/3b85d743-e792-4f3b-a8dd-c2998d1fb906" alt="Insert Post 5">
+            <div class="image-overlay">
+              <span>Post 5</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/8eadf8d3-bd4e-4604-b2c9-b7218ca77573" alt="Insert Post 6">
+            <div class="image-overlay">
+              <span>Post 6</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/aecdcf58-3550-4093-a4c9-c7f4ffe5cd32" alt="Insert Comment 1">
+            <div class="image-overlay">
+              <span>Comment 1</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/2e515d97-0b7a-4875-ad1d-7e7536cc9e09" alt="Insert Comment 2">
+            <div class="image-overlay">
+              <span>Comment 2</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/0b0e3121-ba92-4136-8c0f-619d9a76ce4d" alt="Insert Comment 3">
+            <div class="image-overlay">
+              <span>Comment 3</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/f6128a89-b166-410e-af0f-e7a6b14c5ad0" alt="Insert Comment 4">
+            <div class="image-overlay">
+              <span>Comment 4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-card">
+        <h2 class="step-title"><i class="ph ph-git-merge"></i>Querying Related Collections</h2>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/5251afd7-1e34-4fab-85c2-0666e3dfb657" alt="All Users">
+            <div class="image-overlay">
+              <span>All Users</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/406fda81-fd90-4e85-a599-a9ba4c316628" alt="All Posts">
+            <div class="image-overlay">
+              <span>All Posts</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/1bcde38e-ba3a-4423-b95e-3e19b3e588a7" alt="Posts by GoodGuyGreg">
+            <div class="image-overlay">
+              <span>GoodGuyGreg Posts</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/1601df09-2a3b-4c19-b734-9fd9e8519580" alt="Posts by ScumbagSteve">
+            <div class="image-overlay">
+              <span>ScumbagSteve Posts</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/b417142e-472a-4ed4-a1db-35ced339777c" alt="All Comments">
+            <div class="image-overlay">
+              <span>All Comments</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/d59170e5-1e1d-4bc7-93cd-b98439d031ac" alt="Comments by GoodGuyGreg">
+            <div class="image-overlay">
+              <span>GoodGuyGreg Comments</span>
+            </div>
+          </div>
+          <div class="image-card">
+            <img src="https://github.com/user-attachments/assets/eea52da1-97ca-446b-b84f-15ca395031dc" alt="Comments by ScumbagSteve">
+            <div class="image-overlay">
+              <span>ScumbagSteve Comments</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="imageModal">
+    <div class="modal-content">
+      <button class="close-modal">
+        <i class="ph ph-x"></i>
+      </button>
+      <img src="" alt="Modal Image" id="modalImage">
+    </div>
+  </div>
+
+  <script>
+    // Image Modal Functionality
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.close-modal');
+    const imageCards = document.querySelectorAll('.image-card');
+
+    imageCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const img = card.querySelector('img');
+        modalImg.src = img.src;
+        modalImg.alt = img.alt;
+        modal.classList.add('active');
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
